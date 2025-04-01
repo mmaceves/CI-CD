@@ -11,6 +11,17 @@ jobs:
     name: Checking Tests
     runs-on: ubuntu-latest
 
+    services:
+      mongo:
+        image: mongo:5.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,8 +38,11 @@ jobs:
         run: npm run build
 
       - name: Start server
-        run: npm start
+        env:
+          MONGO_URI: mongodb://127.0.0.1:27017/testdb # Set the MongoDB URI
+        run: npm start &
 
       - name: Run vitest tests
+        env:
+          MONGO_URI: mongodb://127.0.0.1:27017/testdb # Set the MongoDB URI
         run: npm run test
-
