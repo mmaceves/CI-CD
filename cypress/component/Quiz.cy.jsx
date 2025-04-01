@@ -1,5 +1,4 @@
-import Quiz from "../../client/src/components/Quiz";
-import { mount } from '@cypress/react';
+import Quiz from "../../client/src/components/Quiz"
 
 describe('Quiz Component', () => {
   beforeEach(() => {
@@ -14,15 +13,15 @@ describe('Quiz Component', () => {
       ).as('getRandomQuestion')
     });
 
-    mount(<Quiz />);
-    mount(<Quiz />);
+  it('should start the quiz and display the first question', () => {
+    cy.mount(<Quiz />);
     cy.get('button').contains('Start Quiz').click();
     cy.get('.card').should('be.visible');
     cy.get('h2').should('not.be.empty');
   });
 
   it('should answer questions and complete the quiz', () => {
-    mount(<Quiz />);
+    cy.mount(<Quiz />);
     cy.get('button').contains('Start Quiz').click();
 
     // Answer questions
@@ -33,7 +32,7 @@ describe('Quiz Component', () => {
   });
 
   it('should restart the quiz after completion', () => {
-    mount(<Quiz />);
+    cy.mount(<Quiz />);
     cy.get('button').contains('Start Quiz').click();
 
     // Answer questions
@@ -46,4 +45,4 @@ describe('Quiz Component', () => {
     cy.get('.card').should('be.visible');
     cy.get('h2').should('not.be.empty');
   });
-
+});

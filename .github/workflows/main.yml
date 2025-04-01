@@ -45,4 +45,4 @@ jobs:
       - name: Run Cypress tests
         env:
           MONGO_URI: mongodb://127.0.0.1:27017/testdb # Set the MongoDB URI
-        run: npx cypress run
+        run: npx cypress run --component
